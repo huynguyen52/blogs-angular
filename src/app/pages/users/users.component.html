@@ -2,27 +2,35 @@
   class="flex flex-column sm:flex-row flex-wrap space-y-4 sm:space-y-0 items-center justify-between pb-4"
 >
   <app-breadcrumb></app-breadcrumb>
-  <app-button [endIcon]="endIcon">
-    Actions
-    <ng-template #endIcon>
-      <!-- class="rtl:rotate-180 w-3.5 h-3.5 ms-2" -->
-      <svg
-        class="rotate-180 w-3.5 h-3.5 ms-2"
-        aria-hidden="true"
-        xmlns="http://www.w3.org/2000/svg"
-        fill="none"
-        viewBox="0 0 14 10"
-      >
-        <path
-          stroke="currentColor"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-width="2"
-          d="M9 5 5 1 1 5"
-        />
-      </svg>
-    </ng-template>
-  </app-button>
+  <app-dropdown>
+    <app-button trigger-dropdown [endIcon]="endIcon">
+      Actions
+      <ng-template #endIcon>
+        <!-- class="rtl:rotate-180 w-3.5 h-3.5 ms-2" -->
+        <svg
+          class="rotate-180 w-3.5 h-3.5 ms-2"
+          aria-hidden="true"
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 14 10"
+        >
+          <path
+            stroke="currentColor"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M9 5 5 1 1 5"
+          />
+        </svg>
+      </ng-template>
+    </app-button>
+    <app-menu
+      [menuItems]="actionLists"
+      (ngModelChange)="onActionsChange($event)"
+      [(ngModel)]="selectedMenuItem"
+      content-dropdown
+    ></app-menu>
+  </app-dropdown>
 </div>
 <app-table
   [data]="data"

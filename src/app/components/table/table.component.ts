@@ -10,11 +10,12 @@ import {
 import { Columns } from '../../models/table';
 import { BehaviorSubject } from 'rxjs';
 import { PaginationComponent } from '../pagination/pagination.component';
+import { InputFieldComponent } from '../input-field/input-field.component';
 
 @Component({
   selector: 'app-table',
   standalone: true,
-  imports: [NgTemplateOutlet, NgIf, PaginationComponent],
+  imports: [NgTemplateOutlet, NgIf, PaginationComponent, InputFieldComponent],
   templateUrl: './table.component.html',
   styleUrl: './table.component.scss',
 })

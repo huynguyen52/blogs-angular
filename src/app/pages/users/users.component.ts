@@ -1,8 +1,12 @@
-import { Component } from '@angular/core';
+import { Component, effect, signal } from '@angular/core';
 import { TableComponent } from '../../components/table/table.component';
 import { Columns } from '../../models/table';
 import { BreadcrumbComponent } from '../../components/breadcrumb/breadcrumb.component';
 import { ButtonComponent } from '../../components/button/button.component';
+import { DropdownComponent } from '../../components/dropdown/dropdown.component';
+import { MenuComponent } from '../../components/menu/menu.component';
+import { FormsModule } from '@angular/forms';
+import { MenuItem } from '../../models/components';
 
 type Product = {
   id: string;
@@ -18,11 +22,44 @@ type Product = {
 @Component({
   selector: 'app-users',
   standalone: true,
-  imports: [TableComponent, BreadcrumbComponent, ButtonComponent],
+  imports: [
+    TableComponent,
+    BreadcrumbComponent,
+    ButtonComponent,
+    DropdownComponent,
+    MenuComponent,
+    FormsModule,
+  ],
   templateUrl: './users.component.html',
   styleUrl: './users.component.scss',
 })
 export class UsersComponent {
+  selectedMenuItem = signal('');
+
+  actionLists: MenuItem[] = [
+    {
+      label: 'Add',
+      value: 'add',
+    },
+    {
+      label: 'Edit',
+      value: 'edit',
+    },
+    {
+      label: 'Delete',
+      value: 'delete',
+    },
+  ];
+
+  constructor() {
+    effect(() => {
+      console.log(333, this.selectedMenuItem());
+    });
+  }
+
+  onActionsChange(value: Event) {
+    console.log(111, value);
+  }
   columns: Columns<Product>[] = [
     {
       accessorKey: 'name',
