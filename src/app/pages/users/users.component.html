@@ -2,8 +2,8 @@
   class="flex flex-column sm:flex-row flex-wrap space-y-4 sm:space-y-0 items-center justify-between pb-4"
 >
   <app-breadcrumb></app-breadcrumb>
-  <app-dropdown>
-    <app-button trigger-dropdown [endIcon]="endIcon">
+  <app-popover #popover>
+    <app-button popover-trigger [endIcon]="endIcon">
       Actions
       <ng-template #endIcon>
         <!-- class="rtl:rotate-180 w-3.5 h-3.5 ms-2" -->
@@ -25,12 +25,13 @@
       </ng-template>
     </app-button>
     <app-menu
-      [menuItems]="actionLists"
+      [menuItems]="actionLists()"
       (ngModelChange)="onActionsChange($event)"
       [(ngModel)]="selectedMenuItem"
-      content-dropdown
+      (itemSelected)="popover.close()"
+      popover-content
     ></app-menu>
-  </app-dropdown>
+  </app-popover>
 </div>
 <app-table
   [data]="data"

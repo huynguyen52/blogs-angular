@@ -1,12 +1,13 @@
-import { Component, effect, signal } from '@angular/core';
+import { Component, computed, effect, signal } from '@angular/core';
 import { TableComponent } from '../../components/table/table.component';
 import { Columns } from '../../models/table';
 import { BreadcrumbComponent } from '../../components/breadcrumb/breadcrumb.component';
 import { ButtonComponent } from '../../components/button/button.component';
-import { DropdownComponent } from '../../components/dropdown/dropdown.component';
 import { MenuComponent } from '../../components/menu/menu.component';
 import { FormsModule } from '@angular/forms';
 import { MenuItem } from '../../models/components';
+import { PopoverComponent } from '../../components/popover/popover.component';
+import { Menu } from '@angular/cdk/menu';
 
 type Product = {
   id: string;
@@ -26,30 +27,39 @@ type Product = {
     TableComponent,
     BreadcrumbComponent,
     ButtonComponent,
-    DropdownComponent,
     MenuComponent,
     FormsModule,
+    PopoverComponent,
   ],
   templateUrl: './users.component.html',
   styleUrl: './users.component.scss',
 })
 export class UsersComponent {
   selectedMenuItem = signal('');
+  selectedRows = signal<Product[]>([]);
 
-  actionLists: MenuItem[] = [
-    {
-      label: 'Add',
-      value: 'add',
-    },
-    {
-      label: 'Edit',
-      value: 'edit',
-    },
-    {
-      label: 'Delete',
-      value: 'delete',
-    },
-  ];
+  addAction = computed<MenuItem>(() => ({
+    label: 'Add',
+    value: 'add',
+  }));
+
+  deleteAction = computed<MenuItem>(() => ({
+    label: 'Delete',
+    value: 'delete',
+    disabled: !this.selectedRows().length,
+  }));
+
+  editAction = computed<MenuItem>(() => ({
+    label: 'Edit',
+    value: 'edit',
+    disabled: !this.selectedRows().length,
+  }));
+
+  actionLists = computed<MenuItem[]>(() => [
+    this.addAction(),
+    this.editAction(),
+    this.deleteAction(),
+  ]);
 
   constructor() {
     effect(() => {
@@ -59,6 +69,7 @@ export class UsersComponent {
 
   onActionsChange(value: Event) {
     console.log(111, value);
+    console.log('selectedRows', this.selectedRows());
   }
   columns: Columns<Product>[] = [
     {
@@ -129,6 +140,6 @@ export class UsersComponent {
   ];
 
   onRowSelectionChange(rows: Product[]) {
-    console.log(rows);
+    this.selectedRows.set(rows);
   }
 }

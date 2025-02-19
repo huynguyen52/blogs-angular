@@ -1,0 +1,12 @@
+<div (click)="isOpen = !isOpen" cdkOverlayOrigin #trigger="cdkOverlayOrigin">
+  <ng-content select="[popover-trigger]"></ng-content>
+</div>
+
+<ng-template
+  [cdkConnectedOverlayOpen]="isOpen"
+  cdkConnectedOverlay
+  [cdkConnectedOverlayOrigin]="trigger"
+  (overlayOutsideClick)="isOpen = false"
+>
+  <ng-content select="[popover-content]"></ng-content>
+</ng-template>

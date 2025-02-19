@@ -1,12 +1,19 @@
 import { CdkMenu, CdkMenuItem } from '@angular/cdk/menu';
-import { Component, Input, forwardRef } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  Output,
+  forwardRef,
+} from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { MenuItem } from '../../models/components';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-menu',
   standalone: true,
-  imports: [CdkMenu, CdkMenuItem],
+  imports: [CdkMenu, CdkMenuItem, CommonModule],
   templateUrl: './menu.component.html',
   styleUrl: './menu.component.scss',
   providers: [
@@ -22,6 +29,7 @@ export class MenuComponent implements ControlValueAccessor {
   selectedMenuItem: MenuItem | null = null;
 
   @Input() menuItems: MenuItem[] = [];
+  @Output() itemSelected = new EventEmitter<void>();
 
   // Function to call when the value changes
   onChange: (value: MenuItem) => void = () => {};
@@ -43,5 +51,7 @@ export class MenuComponent implements ControlValueAccessor {
     this.selectedMenuItem = menuItem;
     this.onChange(menuItem); // Notify form control
     this.onTouched(); // Mark as touched
+
+    this.itemSelected.emit();
   }
 }
