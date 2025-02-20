@@ -29,7 +29,7 @@ export class MenuComponent implements ControlValueAccessor {
   selectedMenuItem: MenuItem | null = null;
 
   @Input() menuItems: MenuItem[] = [];
-  @Output() itemSelected = new EventEmitter<void>();
+  @Output() itemSelected = new EventEmitter<MenuItem>();
 
   // Function to call when the value changes
   onChange: (value: MenuItem) => void = () => {};
@@ -52,6 +52,6 @@ export class MenuComponent implements ControlValueAccessor {
     this.onChange(menuItem); // Notify form control
     this.onTouched(); // Mark as touched
 
-    this.itemSelected.emit();
+    this.itemSelected.emit(menuItem);
   }
 }

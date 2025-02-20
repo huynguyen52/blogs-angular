@@ -1,4 +1,4 @@
-import { Component, computed, effect, signal } from '@angular/core';
+import { Component, ViewChild, computed, effect, signal } from '@angular/core';
 import { TableComponent } from '../../components/table/table.component';
 import { Columns } from '../../models/table';
 import { BreadcrumbComponent } from '../../components/breadcrumb/breadcrumb.component';
@@ -8,6 +8,7 @@ import { FormsModule } from '@angular/forms';
 import { MenuItem } from '../../models/components';
 import { PopoverComponent } from '../../components/popover/popover.component';
 import { Menu } from '@angular/cdk/menu';
+import { ModalComponent } from '../../components/modal/modal.component';
 
 type Product = {
   id: string;
@@ -30,6 +31,7 @@ type Product = {
     MenuComponent,
     FormsModule,
     PopoverComponent,
+    ModalComponent,
   ],
   templateUrl: './users.component.html',
   styleUrl: './users.component.scss',
@@ -66,10 +68,12 @@ export class UsersComponent {
       console.log(333, this.selectedMenuItem());
     });
   }
+  @ViewChild(ModalComponent) modal!: ModalComponent;
 
   onActionsChange(value: Event) {
     console.log(111, value);
     console.log('selectedRows', this.selectedRows());
+    this.modal.openModal();
   }
   columns: Columns<Product>[] = [
     {

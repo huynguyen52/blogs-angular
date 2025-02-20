@@ -1,0 +1,7 @@
+<div (click)="openModal()">
+  <ng-content select="[modal-trigger]"></ng-content>
+</div>
+
+<ng-template cdkPortal>
+  <ng-content select="[modal-content]"></ng-content>
+</ng-template>
