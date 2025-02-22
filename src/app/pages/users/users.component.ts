@@ -7,8 +7,8 @@ import { MenuComponent } from '../../components/menu/menu.component';
 import { FormsModule } from '@angular/forms';
 import { MenuItem } from '../../models/components';
 import { PopoverComponent } from '../../components/popover/popover.component';
-import { Menu } from '@angular/cdk/menu';
 import { ModalComponent } from '../../components/modal/modal.component';
+import { CreateUserFormComponent } from './components/create-user-form/create-user-form.component';
 
 type Product = {
   id: string;
@@ -32,6 +32,7 @@ type Product = {
     FormsModule,
     PopoverComponent,
     ModalComponent,
+    CreateUserFormComponent,
   ],
   templateUrl: './users.component.html',
   styleUrl: './users.component.scss',
