@@ -70,12 +70,20 @@ export class UsersComponent {
     });
   }
   @ViewChild(ModalComponent) modal!: ModalComponent;
+  @ViewChild(CreateUserFormComponent) createUserForm!: CreateUserFormComponent;
 
   onActionsChange(value: Event) {
     console.log(111, value);
     console.log('selectedRows', this.selectedRows());
     this.modal.openModal();
   }
+
+  onModalChanged(state: boolean) {
+    if (!state) {
+      this.createUserForm.resetForm();
+    }
+  }
+
   columns: Columns<Product>[] = [
     {
       accessorKey: 'name',

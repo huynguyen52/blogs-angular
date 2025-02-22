@@ -2,9 +2,11 @@
   class="flex flex-column sm:flex-row flex-wrap space-y-4 sm:space-y-0 items-center justify-between pb-4"
 >
   <app-breadcrumb></app-breadcrumb>
-  <app-modal #modal>
-    <button modal-trigger>Trigger</button>
-    <div modal-content class="bg-white p-8 rounded-lg min-w-[500px]">
+  <app-modal #modal (modalChanged)="onModalChanged($event)">
+    <div
+      modal-content
+      class="bg-white dark:bg-black p-8 rounded-lg min-w-[500px]"
+    >
       <app-create-user-form></app-create-user-form>
     </div>
   </app-modal>

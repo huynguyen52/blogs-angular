@@ -1,6 +1,6 @@
-import { Overlay } from '@angular/cdk/overlay';
+import { Overlay, OverlayRef } from '@angular/cdk/overlay';
 import { CdkPortal, PortalModule } from '@angular/cdk/portal';
-import { Component, ViewChild } from '@angular/core';
+import { Component, EventEmitter, Output, ViewChild } from '@angular/core';
 
 @Component({
   selector: 'app-modal',
@@ -14,6 +14,8 @@ export class ModalComponent {
 
   @ViewChild(CdkPortal) cdkPortal!: CdkPortal;
 
+  @Output() modalChanged = new EventEmitter<boolean>();
+
   openModal() {
     const overlayRef = this.overlay.create({
       positionStrategy: this.overlay
@@ -24,6 +26,10 @@ export class ModalComponent {
       hasBackdrop: true,
     });
     overlayRef.attach(this.cdkPortal);
-    overlayRef.backdropClick().subscribe(() => overlayRef.detach());
+    this.modalChanged.emit(true);
+    overlayRef.backdropClick().subscribe(() => {
+      overlayRef.detach();
+      this.modalChanged.emit(false);
+    });
   }
 }

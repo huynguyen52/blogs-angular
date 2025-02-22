@@ -1,12 +1,38 @@
-<div class="mb-5">
+<div class="mb-5 w-full">
   <label
     [for]="randomId"
     class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+    ngClass="
+      group-[.ng-invalid.ng-touched]:text-red-700
+      group-[.ng-invalid.ng-touched]:dark:text-red-500
+      group-[.ng-invalid.ng-submitted]:text-red-700
+      group-[.ng-invalid.ng-submitted]:dark:text-red-500
+    "
     >{{ label }}</label
   >
   <input
     [id]="randomId"
-    class="shadow-xs bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-xs-light"
+    class="outline-none shadow-xs bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-xs-light"
+    ngClass="
+    group-[.ng-invalid.ng-touched]:bg-red-50
+    group-[.ng-invalid.ng-touched]:border-red-500
+    group-[.ng-invalid.ng-touched]:text-red-900
+    group-[.ng-invalid.ng-touched]:placeholder-red-700
+    group-[.ng-invalid.ng-touched]:focus:ring-red-500
+    group-[.ng-invalid.ng-touched]:focus:border-red-500
+    group-[.ng-invalid.ng-touched]:dark:text-red-500
+    group-[.ng-invalid.ng-touched]:dark:placeholder-red-500
+    group-[.ng-invalid.ng-touched]:dark:border-red-500
+    group-[.ng-invalid.ng-submitted]:bg-red-50
+    group-[.ng-invalid.ng-submitted]:border-red-500
+    group-[.ng-invalid.ng-submitted]:text-red-900
+    group-[.ng-invalid.ng-submitted]:placeholder-red-700
+    group-[.ng-invalid.ng-submitted]:focus:ring-red-500
+    group-[.ng-invalid.ng-submitted]:focus:border-red-500
+    group-[.ng-invalid.ng-submitted]:dark:text-red-500
+    group-[.ng-invalid.ng-submitted]:dark:placeholder-red-500
+    group-[.ng-invalid.ng-submitted]:dark:border-red-500
+    "
     [placeholder]="placeholder"
     [value]="value"
     (input)="handleChange($event)"
@@ -14,4 +40,9 @@
     (blur)="handleTouched()"
     required
   />
+  @if (descriptionTemplate()) {
+  <ng-container
+    *ngTemplateOutlet="descriptionTemplate() || null"
+  ></ng-container>
+  }
 </div>

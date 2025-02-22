@@ -1,4 +1,12 @@
-import { Component, Input, forwardRef } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import {
+  Component,
+  HostBinding,
+  Input,
+  TemplateRef,
+  contentChild,
+  forwardRef,
+} from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { v4 as uuidv4 } from 'uuid';
 
@@ -7,6 +15,7 @@ import { v4 as uuidv4 } from 'uuid';
   selector: 'app-text-field',
   templateUrl: './text-field.component.html',
   styleUrls: ['./text-field.component.scss'],
+  imports: [CommonModule],
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,
@@ -22,6 +31,14 @@ export class TextFieldComponent implements ControlValueAccessor {
 
   @Input() label: string = '';
   @Input() placeholder: string = '';
+
+  protected readonly descriptionTemplate =
+    contentChild<TemplateRef<unknown> | null>('description');
+
+  /**
+   * the TailwindCSS group class for styling purpose when the input is in error state
+   */
+  @HostBinding('class') protected readonly group = 'group';
 
   // Method to call when the value changes
   private onChange: (value: string) => void = () => {};
