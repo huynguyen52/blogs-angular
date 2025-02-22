@@ -26,6 +26,7 @@
     label="Password"
     placeholder="********"
     formControlName="password"
+    [class.ng-submitted]="form.submitted"
   >
     <ng-template
       #description
@@ -47,6 +48,7 @@
     label="Confirm Password"
     placeholder="********"
     formControlName="confirmPassword"
+    [class.ng-submitted]="form.submitted"
   >
     <ng-template
       #description
@@ -61,6 +63,13 @@
         >
           Confirm Password is required!
         </ng-container>
+        <ng-container
+          *ngIf="
+            createUserForm.controls.confirmPassword.errors['incorrectMatching']
+          "
+        >
+          Confirm Password is not matching
+        </ng-container>
       </p>
     </ng-template>
   </app-text-field>
@@ -69,12 +78,14 @@
       label="First name"
       placeholder="First name"
       formControlName="firstName"
+      [class.ng-submitted]="form.submitted"
     >
     </app-text-field>
     <app-text-field
       label="Last name"
       placeholder="Last name"
       formControlName="lastName"
+      [class.ng-submitted]="form.submitted"
     >
     </app-text-field>
   </div>
@@ -83,12 +94,14 @@
       label="Phone number"
       placeholder="123-456-7890"
       formControlName="phoneNumber"
+      [class.ng-submitted]="form.submitted"
     >
     </app-text-field>
     <app-text-field
       label="Company"
       placeholder="Company"
       formControlName="company"
+      [class.ng-submitted]="form.submitted"
     >
     </app-text-field>
   </div>
