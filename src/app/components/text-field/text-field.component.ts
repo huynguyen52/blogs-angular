@@ -25,12 +25,15 @@ import { v4 as uuidv4 } from 'uuid';
   ],
 })
 export class TextFieldComponent implements ControlValueAccessor {
+  showPassword = false;
   value: string = '';
   isDisabled: boolean = false;
   randomId = uuidv4();
 
   @Input() label: string = '';
   @Input() placeholder: string = '';
+  @Input() type: 'text' | 'password' = 'text';
+  @Input() autofocus = false;
 
   protected readonly descriptionTemplate =
     contentChild<TemplateRef<unknown> | null>('description');

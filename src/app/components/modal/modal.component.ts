@@ -10,14 +10,15 @@ import { Component, EventEmitter, Output, ViewChild } from '@angular/core';
   styleUrl: './modal.component.scss',
 })
 export class ModalComponent {
+  private overlayRef: OverlayRef | undefined;
   constructor(private overlay: Overlay) {}
 
   @ViewChild(CdkPortal) cdkPortal!: CdkPortal;
 
   @Output() modalChanged = new EventEmitter<boolean>();
 
-  openModal() {
-    const overlayRef = this.overlay.create({
+  public openModal() {
+    this.overlayRef = this.overlay.create({
       positionStrategy: this.overlay
         .position()
         .global()
@@ -25,11 +26,13 @@ export class ModalComponent {
         .centerVertically(),
       hasBackdrop: true,
     });
-    overlayRef.attach(this.cdkPortal);
+    this.overlayRef.attach(this.cdkPortal);
     this.modalChanged.emit(true);
-    overlayRef.backdropClick().subscribe(() => {
-      overlayRef.detach();
-      this.modalChanged.emit(false);
-    });
+    this.overlayRef.backdropClick().subscribe(() => this.closeModal());
+  }
+
+  public closeModal() {
+    this.overlayRef?.detach();
+    this.modalChanged.emit(false);
   }
 }

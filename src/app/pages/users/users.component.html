@@ -7,7 +7,7 @@
       modal-content
       class="bg-white dark:bg-black p-8 rounded-lg min-w-[500px]"
     >
-      <app-create-user-form></app-create-user-form>
+      <app-create-user-form (onPressEsc)="onCreateUserFormPressEsc()"></app-create-user-form>
     </div>
   </app-modal>
   <app-popover #popover>

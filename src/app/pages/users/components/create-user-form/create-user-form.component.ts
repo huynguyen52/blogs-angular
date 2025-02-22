@@ -1,5 +1,11 @@
 import { CommonModule } from '@angular/common';
-import { Component, ViewChild } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  HostListener,
+  Output,
+  ViewChild,
+} from '@angular/core';
 import {
   FormControl,
   FormGroup,
@@ -26,6 +32,8 @@ import { confirmPasswordValidator } from '../../../../common/validator/confirm-p
   styleUrl: './create-user-form.component.scss',
 })
 export class CreateUserFormComponent {
+  @Output() onPressEsc = new EventEmitter();
+
   createUserForm = new FormGroup(
     {
       email: new FormControl<string>('', [
@@ -43,6 +51,11 @@ export class CreateUserFormComponent {
   );
 
   @ViewChild('form') private form!: FormGroupDirective;
+
+  @HostListener('document:keydown.escape', ['$event'])
+  handleEscapeKey() {
+    this.onPressEsc.emit();
+  }
 
   resetForm() {
     this.form.resetForm();

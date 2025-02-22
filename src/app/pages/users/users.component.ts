@@ -72,6 +72,10 @@ export class UsersComponent {
   @ViewChild(ModalComponent) modal!: ModalComponent;
   @ViewChild(CreateUserFormComponent) createUserForm!: CreateUserFormComponent;
 
+  onCreateUserFormPressEsc() {
+    this.modal.closeModal();
+  }
+
   onActionsChange(value: Event) {
     console.log(111, value);
     console.log('selectedRows', this.selectedRows());
