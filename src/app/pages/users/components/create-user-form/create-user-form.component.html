@@ -1,4 +1,8 @@
-<form class="max-w-md mx-auto" #form="ngForm" [formGroup]="createUserForm">
+<form
+  class="max-w-md mx-auto flex flex-col gap-5"
+  #form="ngForm"
+  [formGroup]="createUserForm"
+>
   <app-text-field
     label="Email"
     placeholder="name@example.com"

@@ -1,0 +1,32 @@
+<app-popover #popover>
+  <app-text-field
+    size="small"
+    [ngModel]="selectedMenuItem?.label"
+    popover-trigger
+    [readonly]="true"
+  >
+    <ng-template #endIcon>
+      <svg
+        class="rotate-180 w-3.5 h-3.5 ms-2"
+        aria-hidden="true"
+        xmlns="http://www.w3.org/2000/svg"
+        fill="none"
+        viewBox="0 0 14 10"
+      >
+        <path
+          stroke="currentColor"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+          d="M9 5 5 1 1 5"
+        />
+      </svg>
+    </ng-template>
+  </app-text-field>
+  <app-menu
+    popover-content
+    [ngModel]="selectedMenuItem"
+    [menuItems]="options"
+    (itemSelected)="selectMenuItem($event)"
+  ></app-menu>
+</app-popover>

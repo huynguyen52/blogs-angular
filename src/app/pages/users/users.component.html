@@ -2,14 +2,12 @@
   class="flex flex-column sm:flex-row flex-wrap space-y-4 sm:space-y-0 items-center justify-between pb-4"
 >
   <app-breadcrumb></app-breadcrumb>
-  <app-modal #modal (modalChanged)="onModalChanged($event)">
-    <div
-      modal-content
-      class="bg-white dark:bg-black p-8 rounded-lg min-w-[500px]"
-    >
-      <app-create-user-form (onPressEsc)="onCreateUserFormPressEsc()"></app-create-user-form>
-    </div>
-  </app-modal>
+  <app-dropdown-input
+    [options]="[
+      { label: 'Male', value: 'male' },
+      { label: 'Female', value: 'female' }
+    ]"
+  ></app-dropdown-input>
   <app-popover #popover>
     <app-button popover-trigger [endIcon]="endIcon">
       Actions
@@ -62,3 +60,13 @@
     </div>
   </ng-template>
 </app-table>
+<app-modal #modal (modalChanged)="onModalChanged($event)">
+  <div
+    modal-content
+    class="bg-white dark:bg-black p-8 rounded-lg min-w-[500px]"
+  >
+    <app-create-user-form
+      (onPressEsc)="onCreateUserFormPressEsc()"
+    ></app-create-user-form>
+  </div>
+</app-modal>

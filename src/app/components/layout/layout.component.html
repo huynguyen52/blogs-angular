@@ -31,9 +31,9 @@
       <app-theme-toggle-button class="ml-auto"></app-theme-toggle-button>
       <div class="flex items-center">
         <div class="flex items-center ms-3">
-          <app-dropdown>
+          <app-popover #popover>
             <button
-              trigger-dropdown
+              popover-trigger
               type="button"
               class="flex text-sm bg-gray-800 rounded-full focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600"
               aria-expanded="false"
@@ -46,8 +46,8 @@
                 alt="user photo"
               />
             </button>
-            <app-menu content-dropdown></app-menu>
-          </app-dropdown>
+            <app-menu popover-content></app-menu>
+          </app-popover>
         </div>
       </div>
     </div>

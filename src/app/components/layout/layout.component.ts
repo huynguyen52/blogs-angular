@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
 import { ThemeToggleButtonComponent } from '../theme-toggle-button/theme-toggle-button.component';
-import { DropdownComponent } from '../dropdown/dropdown.component';
 import { MenuComponent } from '../menu/menu.component';
+import { PopoverComponent } from '../popover/popover.component';
 
 @Component({
   selector: 'app-layout',
@@ -12,8 +12,8 @@ import { MenuComponent } from '../menu/menu.component';
     RouterLink,
     RouterLinkActive,
     ThemeToggleButtonComponent,
-    DropdownComponent,
     MenuComponent,
+    PopoverComponent,
   ],
   templateUrl: './layout.component.html',
   styleUrl: './layout.component.scss',

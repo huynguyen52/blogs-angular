@@ -30,13 +30,23 @@ export class TextFieldComponent implements ControlValueAccessor {
   isDisabled: boolean = false;
   randomId = uuidv4();
 
+  @Input() size: 'small' | 'medium' | 'large' = 'medium';
   @Input() label: string = '';
   @Input() placeholder: string = '';
   @Input() type: 'text' | 'password' = 'text';
   @Input() autofocus = false;
+  @Input() className = '';
+  @Input() readonly = false;
 
   protected readonly descriptionTemplate =
     contentChild<TemplateRef<unknown> | null>('description');
+
+  protected readonly startIcon = contentChild<TemplateRef<unknown> | null>(
+    'startIcon'
+  );
+  protected readonly endIcon = contentChild<TemplateRef<unknown> | null>(
+    'endIcon'
+  );
 
   /**
    * the TailwindCSS group class for styling purpose when the input is in error state

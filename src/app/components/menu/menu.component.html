@@ -21,12 +21,18 @@
       [ngClass]="{
         'opacity-50 cursor-not-allowed select-none': item.disabled,
         'hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white':
-          !item.disabled
+          !item.disabled,
+        'bg-gray-100 dark:bg-gray-600 dark:text-white':
+          item.value === selectedMenuItem?.value
       }"
     >
       <p
         class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white"
         role="menuitem"
+        [ngClass]="{
+          'bg-gray-100 dark:bg-gray-600 dark:text-white':
+            item.value === selectedMenuItem?.value
+        }"
       >
         {{ item.label }}
       </p>

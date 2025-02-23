@@ -1,4 +1,5 @@
-<div class="mb-5 w-full">
+<div class="w-full" [ngClass]="className">
+  @if (label) {
   <label
     [for]="randomId"
     class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
@@ -10,31 +11,44 @@
     "
     >{{ label }}</label
   >
+  }
   <div class="relative">
+    @if (startIcon()) {
+    <div
+      class="absolute inset-y-0 left-0 rtl:inset-r-0 rtl:right-0 flex items-center ps-3 pointer-events-none"
+    >
+      <ng-container *ngTemplateOutlet="startIcon() || null"></ng-container>
+    </div>
+    }
     <input
+      [readonly]="readonly"
       [autofocus]="autofocus"
       [id]="randomId"
       class="outline-none shadow-xs bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-xs-light"
-      ngClass="
-    group-[.ng-invalid.ng-touched]:bg-red-50
-    group-[.ng-invalid.ng-touched]:border-red-500
-    group-[.ng-invalid.ng-touched]:text-red-900
-    group-[.ng-invalid.ng-touched]:placeholder-red-700
-    group-[.ng-invalid.ng-touched]:focus:ring-red-500
-    group-[.ng-invalid.ng-touched]:focus:border-red-500
-    group-[.ng-invalid.ng-touched]:dark:text-red-500
-    group-[.ng-invalid.ng-touched]:dark:placeholder-red-500
-    group-[.ng-invalid.ng-touched]:dark:border-red-500
-    group-[.ng-invalid.ng-submitted]:bg-red-50
-    group-[.ng-invalid.ng-submitted]:border-red-500
-    group-[.ng-invalid.ng-submitted]:text-red-900
-    group-[.ng-invalid.ng-submitted]:placeholder-red-700
-    group-[.ng-invalid.ng-submitted]:focus:ring-red-500
-    group-[.ng-invalid.ng-submitted]:focus:border-red-500
-    group-[.ng-invalid.ng-submitted]:dark:text-red-500
-    group-[.ng-invalid.ng-submitted]:dark:placeholder-red-500
-    group-[.ng-invalid.ng-submitted]:dark:border-red-500
-    "
+      [ngClass]="{
+        '!p-2': size === 'small',
+        '!p-3': size === 'large',
+        '!ps-10': startIcon(),
+        'cursor-pointer': readonly,
+        'group-[.ng-invalid.ng-touched]:bg-red-50': true,
+        'group-[.ng-invalid.ng-touched]:border-red-500': true,
+        'group-[.ng-invalid.ng-touched]:text-red-900': true,
+        'group-[.ng-invalid.ng-touched]:placeholder-red-700': true,
+        'group-[.ng-invalid.ng-touched]:focus:ring-red-500': true,
+        'group-[.ng-invalid.ng-touched]:focus:border-red-500': true,
+        'group-[.ng-invalid.ng-touched]:dark:text-red-500': true,
+        'group-[.ng-invalid.ng-touched]:dark:placeholder-red-500': true,
+        'group-[.ng-invalid.ng-touched]:dark:border-red-500': true,
+        'group-[.ng-invalid.ng-submitted]:bg-red-50': true,
+        'group-[.ng-invalid.ng-submitted]:border-red-500': true,
+        'group-[.ng-invalid.ng-submitted]:text-red-900': true,
+        'group-[.ng-invalid.ng-submitted]:placeholder-red-700': true,
+        'group-[.ng-invalid.ng-submitted]:focus:ring-red-500': true,
+        'group-[.ng-invalid.ng-submitted]:focus:border-red-500': true,
+        'group-[.ng-invalid.ng-submitted]:dark:text-red-500': true,
+        'group-[.ng-invalid.ng-submitted]:dark:placeholder-red-500': true,
+        'group-[.ng-invalid.ng-submitted]:dark:border-red-500': true,
+      }"
       [type]="type === 'password' && showPassword ? 'text' : type"
       [placeholder]="placeholder"
       [value]="value"
@@ -43,7 +57,15 @@
       (blur)="handleTouched()"
       required
     />
-    @if (type === 'password') {
+    @if (endIcon()) {
+    <button
+      type="button"
+      tabindex="-1"
+      class="text-gray-400 dark:text-neutral-600 absolute inset-y-0 end-0 flex items-center z-20 px-3 cursor-pointer rounded-e-md focus:outline-none group-[.ng-invalid.ng-touched]:text-red-500 group-[.ng-invalid.ng-submitted]:text-red-500"
+    >
+      <ng-container *ngTemplateOutlet="endIcon() || null"></ng-container>
+    </button>
+    } @if (type === 'password') {
     <button
       (click)="showPassword = !showPassword"
       type="button"
