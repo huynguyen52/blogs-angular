@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
 import { ThemeToggleButtonComponent } from '../theme-toggle-button/theme-toggle-button.component';
-import { MenuComponent } from '../menu/menu.component';
 import { PopoverComponent } from '../popover/popover.component';
 
 @Component({
@@ -12,7 +11,6 @@ import { PopoverComponent } from '../popover/popover.component';
     RouterLink,
     RouterLinkActive,
     ThemeToggleButtonComponent,
-    MenuComponent,
     PopoverComponent,
   ],
   templateUrl: './layout.component.html',

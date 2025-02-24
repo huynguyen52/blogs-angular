@@ -1,0 +1,7 @@
+<div
+  class="flex w-full overflow-x-auto min-w-24 gap-2 shadow-xs bg-gray-50 border border-gray-300 rounded-full focus:ring-blue-500 focus:border-blue-500 p-2 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-xs-light"
+>
+  helo @for (item of items; track item.value) {
+  <app-chip>{{ item.label }}</app-chip>
+  }
+</div>

@@ -1,7 +1,12 @@
 <app-popover #popover>
+  @if (multiple) {
+  <div popover-trigger class="w-full max-w-40">
+    <app-chips-list [items]="selectedMenuItems"></app-chips-list>
+  </div>
+  } @else {
   <app-text-field
     size="small"
-    [ngModel]="selectedMenuItem?.label"
+    [ngModel]="selectedMenuItems.length ? selectedMenuItems[0].label : ''"
     popover-trigger
     [readonly]="true"
   >
@@ -23,10 +28,12 @@
       </svg>
     </ng-template>
   </app-text-field>
+  }
   <app-menu
+    [multiple]="multiple"
     popover-content
-    [ngModel]="selectedMenuItem"
-    [menuItems]="options"
-    (itemSelected)="selectMenuItem($event)"
+    [(ngModel)]="selectedMenuItems"
+    [options]="options"
+    (ngModelChange)="selectMenuItem($event)"
   ></app-menu>
 </app-popover>

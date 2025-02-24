@@ -31,10 +31,9 @@
       </ng-template>
     </app-button>
     <app-menu
-      [menuItems]="actionLists()"
+      [options]="actionLists()"
       (ngModelChange)="onActionsChange($event)"
       [(ngModel)]="selectedMenuItem"
-      (itemSelected)="popover.close()"
       popover-content
     ></app-menu>
   </app-popover>

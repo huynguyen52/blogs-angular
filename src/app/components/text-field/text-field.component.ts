@@ -9,6 +9,7 @@ import {
 } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { v4 as uuidv4 } from 'uuid';
+import { DropdownOption } from '../../models/components';
 
 @Component({
   standalone: true,
@@ -61,7 +62,7 @@ export class TextFieldComponent implements ControlValueAccessor {
 
   // Write value to the input when the form model is updated
   writeValue(value: string): void {
-    this.value = value;
+    this.value = value || '';
   }
 
   // Register the change function

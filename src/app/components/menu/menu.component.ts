@@ -26,20 +26,20 @@ import { CommonModule } from '@angular/common';
 })
 export class MenuComponent implements ControlValueAccessor {
   // Property to hold the value of the menu
-  selectedMenuItem: MenuItem | null = null;
+  selectedMenuItems: MenuItem[] = [];
 
-  @Input() menuItems: MenuItem[] = [];
-  @Output() itemSelected = new EventEmitter<MenuItem>();
+  @Input() options: MenuItem[] = [];
+  @Input() multiple = false;
 
   // Function to call when the value changes
-  onChange: (value: MenuItem) => void = () => {};
+  onChange: (values: MenuItem[]) => void = () => {};
   // Function to call when the component is touched
   onTouched: () => void = () => {};
 
-  writeValue(value: MenuItem | null): void {
-    this.selectedMenuItem = value;
+  writeValue(values: MenuItem[]): void {
+    this.selectedMenuItems = values;
   }
-  registerOnChange(fn: (value: MenuItem) => void): void {
+  registerOnChange(fn: (values: MenuItem[]) => void): void {
     this.onChange = fn;
   }
   registerOnTouched(fn: () => void): void {
@@ -48,10 +48,25 @@ export class MenuComponent implements ControlValueAccessor {
 
   // Method to update the value and propagate the change
   selectMenuItem(menuItem: MenuItem): void {
-    this.selectedMenuItem = menuItem;
-    this.onChange(menuItem); // Notify form control
+    let newValues: MenuItem[] = [];
+    if (!this.multiple) {
+      newValues = [menuItem];
+    } else {
+      const isExist = this.selectedMenuItems.some(
+        (item) => item.value === menuItem.value
+      );
+      newValues = isExist
+        ? this.selectedMenuItems.filter((item) => item !== menuItem)
+        : [...this.selectedMenuItems, menuItem];
+    }
+    this.selectedMenuItems = newValues;
+    this.onChange(newValues); // Notify form control
     this.onTouched(); // Mark as touched
-
-    this.itemSelected.emit(menuItem);
   }
+
+  isActive = (menuItem: MenuItem): boolean => {
+    return this.selectedMenuItems?.some(
+      (item) => item.value === menuItem.value
+    );
+  };
 }

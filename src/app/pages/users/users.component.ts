@@ -3,14 +3,13 @@ import { TableComponent } from '../../components/table/table.component';
 import { Columns } from '../../models/table';
 import { BreadcrumbComponent } from '../../components/breadcrumb/breadcrumb.component';
 import { ButtonComponent } from '../../components/button/button.component';
-import { MenuComponent } from '../../components/menu/menu.component';
 import { FormsModule } from '@angular/forms';
-import { MenuItem } from '../../models/components';
+import { DropdownOption, MenuItem } from '../../models/components';
 import { PopoverComponent } from '../../components/popover/popover.component';
 import { ModalComponent } from '../../components/modal/modal.component';
 import { CreateUserFormComponent } from './components/create-user-form/create-user-form.component';
 import { DropdownInputComponent } from '../../components/dropdown-input/dropdown-input.component';
-import { TextFieldComponent } from '../../components/text-field/text-field.component';
+import { MenuComponent } from '../../components/menu/menu.component';
 
 type Product = {
   id: string;
@@ -30,19 +29,18 @@ type Product = {
     TableComponent,
     BreadcrumbComponent,
     ButtonComponent,
-    MenuComponent,
     FormsModule,
     PopoverComponent,
     ModalComponent,
     CreateUserFormComponent,
     DropdownInputComponent,
-    TextFieldComponent,
+    MenuComponent,
   ],
   templateUrl: './users.component.html',
   styleUrl: './users.component.scss',
 })
 export class UsersComponent {
-  selectedMenuItem = signal('');
+  selectedMenuItem = signal<DropdownOption[]>([]);
   selectedRows = signal<Product[]>([]);
 
   addAction = computed<MenuItem>(() => ({
@@ -68,27 +66,24 @@ export class UsersComponent {
     this.deleteAction(),
   ]);
 
-  constructor() {
-    effect(() => {
-      console.log(333, this.selectedMenuItem());
-    });
-  }
   @ViewChild(ModalComponent) modal!: ModalComponent;
+  @ViewChild(PopoverComponent) popover!: PopoverComponent;
   @ViewChild(CreateUserFormComponent) createUserForm!: CreateUserFormComponent;
 
   onCreateUserFormPressEsc() {
     this.modal.closeModal();
   }
 
-  onActionsChange(value: Event) {
-    console.log(111, value);
+  onActionsChange(value: DropdownOption[]) {
     console.log('selectedRows', this.selectedRows());
     this.modal.openModal();
+    this.popover.close();
   }
 
   onModalChanged(state: boolean) {
     if (!state) {
       this.createUserForm.resetForm();
+      this.selectedMenuItem.set([]);
     }
   }
 

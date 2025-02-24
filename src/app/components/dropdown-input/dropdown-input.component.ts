@@ -4,31 +4,39 @@ import { MenuComponent } from '../menu/menu.component';
 import { DropdownOption } from '../../models/components';
 import { ControlValueAccessor, FormsModule } from '@angular/forms';
 import { TextFieldComponent } from '../text-field/text-field.component';
+import { ChipsListComponent } from '../chips-list/chips-list.component';
 
 @Component({
   selector: 'app-dropdown-input',
   standalone: true,
-  imports: [PopoverComponent, MenuComponent, FormsModule, TextFieldComponent],
+  imports: [
+    PopoverComponent,
+    MenuComponent,
+    FormsModule,
+    TextFieldComponent,
+    ChipsListComponent,
+  ],
   templateUrl: './dropdown-input.component.html',
   styleUrl: './dropdown-input.component.scss',
 })
 export class DropdownInputComponent implements ControlValueAccessor {
-  selectedMenuItem: DropdownOption | null = null;
+  selectedMenuItems: DropdownOption[] = [];
 
   @Input() options: DropdownOption[] = [];
+  @Input() multiple = false;
 
   @ViewChild(PopoverComponent) popover!: PopoverComponent;
 
   // Function to call when the value changes
-  onChange: (value: DropdownOption) => void = () => {};
+  onChange: (values: DropdownOption[]) => void = () => {};
 
   // Function to call when the component is touched
   onTouched: () => void = () => {};
 
-  writeValue(value: DropdownOption | null): void {
-    this.selectedMenuItem = value;
+  writeValue(values: DropdownOption[]): void {
+    this.selectedMenuItems = values;
   }
-  registerOnChange(fn: (value: DropdownOption) => void): void {
+  registerOnChange(fn: (values: DropdownOption[]) => void): void {
     this.onChange = fn;
   }
   registerOnTouched(fn: () => void): void {
@@ -36,9 +44,8 @@ export class DropdownInputComponent implements ControlValueAccessor {
   }
 
   // Method to update the value and propagate the change
-  selectMenuItem(menuItem: DropdownOption): void {
-    this.selectedMenuItem = menuItem;
-    this.onChange(menuItem); // Notify form control
+  selectMenuItem(menuItems: DropdownOption[]): void {
+    this.onChange(menuItems); // Notify form control
     this.onTouched(); // Mark as touched
     this.popover.close();
   }
