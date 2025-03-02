@@ -25,3 +25,69 @@ Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To u
 ## Further help
 
 To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+
+# Setup Jest
+
+1.
+
+```bash
+npm uninstall karma karma-chrome-launcher karma-coverage karma-jasmine karma-jasmine-html-reporter @types/jasmine jasmine-core
+```
+
+2.
+
+```bash
+npm i --save-dev jest @types/jest  jest-preset-angular
+```
+
+3. Create setup-jest.ts file in root folder
+
+```typescript
+import { setupZoneTestEnv } from "jest-preset-angular/setup-env/zone";
+setupZoneTestEnv();
+```
+
+4. Remove all existing test files
+5. Generate a basic configuration file
+
+```bash
+npm init jest@latest
+```
+
+6. update jest.config.ts
+
+```typescript
+preset: 'jest-preset-angular',
+setupFilesAfterEnv: ['<rootDir>/setup-jest.ts'],
+```
+
+7.
+
+```bash
+npm install ts-node
+```
+
+8. Update tsconfig.spec.json file
+
+```json
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "outDir": "./out-tsc/spec",
+    "types": [
+      "jest" // 1
+    ],
+    "esModuleInterop": true, // 2
+    "emitDecoratorMetadata": true // 3
+  },
+  "include": ["src/**/*.spec.ts", "src/**/*.d.ts"]
+}
+```
+
+9. Add jest configuration on package.json inside script tag
+
+```json
+"test": "jest --verbose",
+"test:coverage": "jest --coverage",
+"test:watch": "jest --watch"
+```
