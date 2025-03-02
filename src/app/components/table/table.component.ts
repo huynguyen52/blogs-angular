@@ -5,21 +5,32 @@ import {
   Output,
   TemplateRef,
   computed,
+  inject,
   signal,
 } from '@angular/core';
 import { Columns } from '../../models/table';
 import { BehaviorSubject } from 'rxjs';
 import { PaginationComponent } from '../pagination/pagination.component';
 import { TextFieldComponent } from '../text-field/text-field.component';
+import { FormsModule } from '@angular/forms';
+import { UserService } from '../../services/user.service';
 
 @Component({
   selector: 'app-table',
   standalone: true,
-  imports: [NgTemplateOutlet, NgIf, PaginationComponent, TextFieldComponent],
+  imports: [
+    NgTemplateOutlet,
+    NgIf,
+    PaginationComponent,
+    TextFieldComponent,
+    FormsModule,
+  ],
   templateUrl: './table.component.html',
   styleUrl: './table.component.scss',
 })
 export class TableComponent<T extends { id: string }> {
+  userService = inject(UserService);
+
   @Input({ required: true }) columns: Columns<T>[] = [];
   @Input({ required: true }) data: T[] = [];
   @Input({ required: true }) actionsTemplate!: TemplateRef<T>;
@@ -27,6 +38,7 @@ export class TableComponent<T extends { id: string }> {
   @Output() onRowSelectionChange = new BehaviorSubject<T[]>([]);
 
   selectedRows = signal<T[]>([]);
+  searchTerm = '';
 
   isAllRowsSelected = computed(() => {
     return this.selectedRows().length === this.data.length;
@@ -77,5 +89,11 @@ export class TableComponent<T extends { id: string }> {
   }
   handleEdit(_t182: any) {
     throw new Error('Method not implemented.');
+  }
+
+  onSearchChange(term: string) {
+    this.userService.searchUser(term).subscribe((data) => {
+      this.userService.setUsers(data);
+    });
   }
 }

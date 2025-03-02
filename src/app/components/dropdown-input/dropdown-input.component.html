@@ -1,7 +1,10 @@
 <app-popover #popover>
   @if (multiple) {
   <div popover-trigger class="w-full max-w-40">
-    <app-chips-list [items]="selectedMenuItems"></app-chips-list>
+    <app-chips-list
+      (onClearChip)="handleRemoveChip($event)"
+      [items]="selectedMenuItems"
+    ></app-chips-list>
   </div>
   } @else {
   <app-text-field
@@ -9,6 +12,7 @@
     [ngModel]="selectedMenuItems.length ? selectedMenuItems[0].label : ''"
     popover-trigger
     [readonly]="true"
+    [placeholder]="placeholder"
   >
     <ng-template #endIcon>
       <svg

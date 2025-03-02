@@ -2,6 +2,7 @@
   class="max-w-md mx-auto flex flex-col gap-5"
   #form="ngForm"
   [formGroup]="createUserForm"
+  (ngSubmit)="onSubmit()"
 >
   <app-text-field
     label="Email"
@@ -100,7 +101,7 @@
     <app-text-field
       label="Phone number"
       placeholder="123-456-7890"
-      formControlName="phoneNumber"
+      formControlName="phone"
       [class.ng-submitted]="form.submitted"
     >
     </app-text-field>

@@ -6,6 +6,8 @@
     <app-text-field
       className="search-input"
       size="small"
+      [ngModel]="searchTerm"
+      (ngModelChange)="onSearchChange($event)"
       placeholder="Search for items"
     >
       <ng-template #startIcon>

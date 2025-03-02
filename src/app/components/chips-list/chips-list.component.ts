@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { ChipComponent } from '../chip/chip.component';
 import { DropdownOption } from '../../models/components';
 
@@ -11,4 +11,9 @@ import { DropdownOption } from '../../models/components';
 })
 export class ChipsListComponent {
   @Input() items: DropdownOption[] = [];
+  @Output() onClearChip = new EventEmitter();
+
+  handleClearChip(value: string) {
+    this.onClearChip.emit(value);
+  }
 }

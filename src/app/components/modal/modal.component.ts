@@ -1,6 +1,15 @@
 import { Overlay, OverlayRef } from '@angular/cdk/overlay';
 import { CdkPortal, PortalModule } from '@angular/cdk/portal';
-import { Component, EventEmitter, Output, ViewChild } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  Output,
+  ViewChild,
+  effect,
+  inject,
+} from '@angular/core';
+import { ModalService } from '../../services/modal.service';
+import { toSignal } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'app-modal',
@@ -11,7 +20,17 @@ import { Component, EventEmitter, Output, ViewChild } from '@angular/core';
 })
 export class ModalComponent {
   private overlayRef: OverlayRef | undefined;
-  constructor(private overlay: Overlay) {}
+  modalService = inject(ModalService);
+
+  constructor(private overlay: Overlay) {
+    this.modalService.getState().subscribe((open) => {
+      if (open) {
+        this.openModal();
+      } else {
+        this.closeModal();
+      }
+    });
+  }
 
   @ViewChild(CdkPortal) cdkPortal!: CdkPortal;
 

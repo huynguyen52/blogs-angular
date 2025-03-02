@@ -24,6 +24,7 @@ export class DropdownInputComponent implements ControlValueAccessor {
 
   @Input() options: DropdownOption[] = [];
   @Input() multiple = false;
+  @Input() placeholder = 'Select an option';
 
   @ViewChild(PopoverComponent) popover!: PopoverComponent;
 
@@ -48,5 +49,11 @@ export class DropdownInputComponent implements ControlValueAccessor {
     this.onChange(menuItems); // Notify form control
     this.onTouched(); // Mark as touched
     this.popover.close();
+  }
+
+  handleRemoveChip(value: string) {
+    this.selectedMenuItems = this.selectedMenuItems.filter(
+      (item) => item.value !== value
+    );
   }
 }

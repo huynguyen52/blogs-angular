@@ -1,4 +1,5 @@
-import { Component, ViewChild, computed, effect, signal } from '@angular/core';
+import { Component, ViewChild, computed, inject, signal } from '@angular/core';
+import { toSignal } from '@angular/core/rxjs-interop';
 import { TableComponent } from '../../components/table/table.component';
 import { Columns } from '../../models/table';
 import { BreadcrumbComponent } from '../../components/breadcrumb/breadcrumb.component';
@@ -8,19 +9,9 @@ import { DropdownOption, MenuItem } from '../../models/components';
 import { PopoverComponent } from '../../components/popover/popover.component';
 import { ModalComponent } from '../../components/modal/modal.component';
 import { CreateUserFormComponent } from './components/create-user-form/create-user-form.component';
-import { DropdownInputComponent } from '../../components/dropdown-input/dropdown-input.component';
 import { MenuComponent } from '../../components/menu/menu.component';
-
-type Product = {
-  id: string;
-  name: string;
-  color: string;
-  category: string;
-  accessories: boolean;
-  available: boolean;
-  price: number;
-  weight: number;
-};
+import { User } from '../../models/user';
+import { UserService } from '../../services/user.service';
 
 @Component({
   selector: 'app-users',
@@ -33,15 +24,16 @@ type Product = {
     PopoverComponent,
     ModalComponent,
     CreateUserFormComponent,
-    DropdownInputComponent,
     MenuComponent,
   ],
   templateUrl: './users.component.html',
   styleUrl: './users.component.scss',
 })
 export class UsersComponent {
+  userService = inject(UserService);
+
   selectedMenuItem = signal<DropdownOption[]>([]);
-  selectedRows = signal<Product[]>([]);
+  selectedRows = signal<User[]>([]);
 
   addAction = computed<MenuItem>(() => ({
     label: 'Add',
@@ -65,6 +57,7 @@ export class UsersComponent {
     this.editAction(),
     this.deleteAction(),
   ]);
+  users = toSignal(this.userService.getUsers());
 
   @ViewChild(ModalComponent) modal!: ModalComponent;
   @ViewChild(PopoverComponent) popover!: PopoverComponent;
@@ -87,75 +80,42 @@ export class UsersComponent {
     }
   }
 
-  columns: Columns<Product>[] = [
+  columns: Columns<User>[] = [
     {
-      accessorKey: 'name',
-      key: 'product-name',
-      header: 'Product name',
+      accessorKey: 'email',
+      key: 'email',
+      header: 'Name',
       isHeading: true,
     },
     {
-      accessorKey: 'color',
-      key: 'color',
-      header: 'Color',
+      accessorKey: 'firstName',
+      key: 'firstName',
+      header: 'FirstName',
     },
     {
-      accessorKey: 'category',
-      key: 'Category',
-      header: 'Category',
+      accessorKey: 'lastName',
+      key: 'lastName',
+      header: 'LastName',
     },
     {
-      accessorKey: 'accessories',
-      key: 'accessories',
-      header: 'Accessories',
+      accessorKey: 'phone',
+      key: 'phone',
+      header: 'Phone',
     },
     {
-      accessorKey: 'available',
-      key: 'available',
-      header: 'Available',
+      accessorKey: 'company',
+      key: 'company',
+      header: 'Company',
     },
     {
-      accessorKey: 'price',
-      key: 'price',
-      header: 'Price',
-    },
-    {
-      accessorKey: 'weight',
-      key: 'weight',
-      header: 'Weight',
-    },
-    {
-      accessorKey: 'weight',
+      accessorKey: 'company',
       key: 'actions',
       header: 'Actions',
       templateName: 'actionsTemplate',
     },
   ];
 
-  data: Product[] = [
-    {
-      id: '1',
-      name: 'Apple MacBook Pro 17"',
-      color: 'Silver',
-      category: 'Laptop',
-      accessories: true,
-      available: true,
-      price: 2999,
-      weight: 3,
-    },
-    {
-      id: '2',
-      name: 'Microsoft Surface Pro',
-      color: 'White',
-      category: 'Laptop PC',
-      accessories: false,
-      available: true,
-      price: 1999,
-      weight: 1,
-    },
-  ];
-
-  onRowSelectionChange(rows: Product[]) {
+  onRowSelectionChange(rows: User[]) {
     this.selectedRows.set(rows);
   }
 }

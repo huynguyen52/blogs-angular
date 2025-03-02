@@ -5,6 +5,7 @@ import {
   HostListener,
   Output,
   ViewChild,
+  inject,
 } from '@angular/core';
 import {
   FormControl,
@@ -17,6 +18,9 @@ import {
 import { ButtonComponent } from '../../../../components/button/button.component';
 import { TextFieldComponent } from '../../../../components/text-field/text-field.component';
 import { confirmPasswordValidator } from '../../../../common/validator/confirm-password-validator.directive';
+import { UserService } from '../../../../services/user.service';
+import { User } from '../../../../models/user';
+import { ModalService } from '../../../../services/modal.service';
 
 @Component({
   selector: 'app-create-user-form',
@@ -32,6 +36,9 @@ import { confirmPasswordValidator } from '../../../../common/validator/confirm-p
   styleUrl: './create-user-form.component.scss',
 })
 export class CreateUserFormComponent {
+  private userService = inject(UserService);
+  private modalService = inject(ModalService);
+
   @Output() onPressEsc = new EventEmitter();
 
   createUserForm = new FormGroup(
@@ -44,13 +51,15 @@ export class CreateUserFormComponent {
       confirmPassword: new FormControl<string>('', [Validators.required]),
       firstName: new FormControl<string>(''),
       lastName: new FormControl<string>(''),
-      phoneNumber: new FormControl<string>(''),
+      phone: new FormControl<string>(''),
       company: new FormControl<string>(''),
     },
     [confirmPasswordValidator('password', 'confirmPassword')]
   );
 
   @ViewChild('form') private form!: FormGroupDirective;
+
+  constructor() {}
 
   @HostListener('document:keydown.escape', ['$event'])
   handleEscapeKey() {
@@ -59,5 +68,17 @@ export class CreateUserFormComponent {
 
   resetForm() {
     this.form.resetForm();
+  }
+  onSubmit() {
+    if (this.createUserForm.valid) {
+      const user = {
+        ...this.createUserForm.value,
+        id: Math.random().toString(),
+      } as User;
+      this.userService.addUser(user);
+      this.modalService.closeModal();
+    } else {
+      console.log('Form is invalid');
+    }
   }
 }
