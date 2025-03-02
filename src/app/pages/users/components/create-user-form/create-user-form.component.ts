@@ -57,7 +57,7 @@ export class CreateUserFormComponent {
     [confirmPasswordValidator('password', 'confirmPassword')]
   );
 
-  @ViewChild('form') private form!: FormGroupDirective;
+  @ViewChild('form') protected form!: FormGroupDirective;
 
   constructor() {}
 

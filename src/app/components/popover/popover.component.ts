@@ -9,7 +9,7 @@ import { Component } from '@angular/core';
   styleUrl: './popover.component.scss',
 })
 export class PopoverComponent {
-  protected isOpen = false;
+  public isOpen = false;
 
   close() {
     this.isOpen = false;
