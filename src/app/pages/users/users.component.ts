@@ -12,6 +12,7 @@ import { CreateUserFormComponent } from './components/create-user-form/create-us
 import { MenuComponent } from '../../components/menu/menu.component';
 import { User } from '../../models/user';
 import { UserService } from '../../services/user.service';
+import { RadioButtonComponent } from '../../components/radio-button/radio-button.component';
 
 @Component({
   selector: 'app-users',
@@ -25,6 +26,7 @@ import { UserService } from '../../services/user.service';
     ModalComponent,
     CreateUserFormComponent,
     MenuComponent,
+    RadioButtonComponent,
   ],
   templateUrl: './users.component.html',
   styleUrl: './users.component.scss',
@@ -58,6 +60,8 @@ export class UsersComponent {
     this.deleteAction(),
   ]);
   users = toSignal(this.userService.getUsers());
+
+  selectedValue = '1';
 
   @ViewChild(ModalComponent) modal!: ModalComponent;
   @ViewChild(PopoverComponent) popover!: PopoverComponent;

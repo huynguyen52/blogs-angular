@@ -63,3 +63,24 @@
     ></app-create-user-form>
   </div>
 </app-modal>
+
+<app-radio-button
+  [(ngModel)]="selectedValue"
+  label="Option 1"
+  name="example"
+  value="1"
+></app-radio-button>
+<app-radio-button
+  [(ngModel)]="selectedValue"
+  label="Option 2"
+  name="example"
+  value="2"
+></app-radio-button>
+<app-radio-button
+  [(ngModel)]="selectedValue"
+  label="Option 3"
+  name="example"
+  value="3"
+></app-radio-button>
+
+<p>111: {{ selectedValue }}</p>
